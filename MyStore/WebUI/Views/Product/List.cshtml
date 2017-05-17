@@ -1,0 +1,29 @@
+﻿@*@using Domain.Entities
+@model IEnumerable<Product>*@
+
+@using WebUI.Models
+@using WebUI.HtmlHelpers
+@model ProductsListViewModel
+
+@{
+    ViewBag.Title = "Кафе семейного типа \"Аладдин\"";
+}
+
+@foreach (var Prod in Model.Products)
+{
+    // В случае если нет частичного представления в /Views/Shared  
+    @*<div class="well">
+        <h3>
+            <strong>@Prod.Prod_Name</strong>
+            <span class="pull-right label label-primary">@Prod.Prod_Price.ToString("# грн./за 100 грамм")</span>
+        </h3>
+        <span class="lead">@Prod.Prod_Description</span>
+    </div>*@
+
+    // при наличии частичного представления в /Views/Shared/ Views/Shared/ProductSummary.cshtml
+    @Html.Partial("ProductSummary", Prod)
+    <hr/>
+}
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
+</div>
